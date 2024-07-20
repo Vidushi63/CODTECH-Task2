@@ -1,0 +1,93 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.lang.String;
+
+class GradeTracker {
+    private ArrayList<Double> grades;
+
+    public GradeTracker() {
+        grades = new ArrayList<>();
+    }
+
+    public void addGrade(double grade) {
+        grades.add(grade);
+    }
+
+    public double calculateAverage() {
+        if (grades.isEmpty()) {
+            return 0;
+        }
+        double sum = 0;
+        for (double grade : grades) {
+            sum += grade;
+        }
+        return sum / grades.size();
+    }
+
+    public char calculateLetterGrade(double average) {
+        if (average >= 90) {
+            return 'A';
+        } else if (average >= 80) {
+            return 'B';
+        } else if (average >= 70) {
+            return 'C';
+        } else if (average >= 60) {
+            return 'D';
+        } else {
+            return 'F';
+        }
+    }
+
+    public double calculateGPA(double average) 
+{
+        if (average >= 90) {
+            return 4.0;
+        } else if (average >= 80) {
+            return 3.0;
+        } else if (average >= 70) {
+            return 2.0;
+        } else if (average >= 60) {
+            return 1.0;
+        } else {
+            return 0.0;
+        }
+    }
+
+    public void displayGrades() {
+        System.out.println("Grades: " + grades);
+    }
+
+    public void displaySummary() {
+        double average = calculateAverage();
+        char letterGrade = calculateLetterGrade(average);
+        double gpa = calculateGPA(average);
+
+        System.out.println("Average Grade: " + average);
+        System.out.println("Letter Grade: " + letterGrade);
+        System.out.println("GPA: " + gpa);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        GradeTracker tracker = new GradeTracker();
+
+        System.out.println("Welcome to the Student Grade Tracker");
+        while (true) {
+            System.out.println("Enter a grade (or type 'done' to finish): ");
+            String input = scanner.next();
+            if (input.equalsIgnoreCase("done")) {
+                break;
+            }
+            try {
+                double grade = Double.parseDouble(input);
+                tracker.addGrade(grade);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid grade.");
+            }
+        }
+
+        tracker.displayGrades();
+        tracker.displaySummary();
+    }
+}
+
